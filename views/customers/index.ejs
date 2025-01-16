@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8" />
+	<title>Customers | 2020/241139</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+	<meta content="Coderthemes" name="author" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+	<link rel="shortcut icon" href="/images/favicon.ico">
+
+	<link href="/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+
+	<link href="/css/icons.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body class="loading" data-layout-color="light" data-layout-mode="default" data-layout-size="fluid"
+	data-topbar-color="light" data-leftbar-position="fixed" data-leftbar-color="light" data-leftbar-size='default'
+	data-sidebar-user='true'>
+
+	<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+		<div class="offcanvas-header">
+			<h4 id="offcanvasRightLabel">Add Customer</h4>
+			<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div> <!-- end offcanvas-header-->
+
+		<div class="offcanvas-body">
+
+			<div class="alert alert-danger error" style="display: none;"></div>
+			<div class="alert alert-success success" style="display: none;"></div>
+
+			<div class="mb-3">
+				<div class="profile_img_show" style="width: 120px; height: 120px; margin: auto; border-radius: 500%; background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url(/images/upload.png); overflow: hidden; cursor: pointer; border: 2px solid black;">
+					<input type="file" id="profile_img" style="display: block; width: 100%; height: 120px; opacity: 0; cursor: pointer;">
+				</div>
+			</div>
+
+			<div class="form-floating mb-3">
+				<input type="text" class="form-control" id="name" placeholder="John Doe">
+				<label for="name">Name</label>
+			</div>
+			<div class="form-floating mb-3">
+				<input type="email" class="form-control" id="email" placeholder="jonhdoe@example.com">
+				<label for="email">Email Address</label>
+			</div>
+			<div class="input-group mb-3 fw-900">
+				<div class="input-group-prepend">
+					<select class="custom-select py-2" id="country_code">
+						<option value="+234"> +234 (Nigeria)</option>
+						<option value="+1"> +1 (USA)</option>
+						<option value="+44"> +44 (UK)</option>
+						<option value="+91"> +91 (India)</option>
+						<option value="+61"> +234 (Australia)</option>
+						<option value="+81"> +81 (Japan)</option>
+					</select>
+				</div>
+				<input type="tel" class="form-control py-2" id="telephone" placeholder="phone_number" aria-label="phone" aria-describedby="basic-addon1">
+			</div>
+			<div class="form-floating mb-3">
+				<input type="text" class="form-control" id="company" placeholder="Final Year">
+				<label for="company">Company</label>
+			</div>
+
+			<button class="btn btn-success mx-auto d-block py-2 px-4 add_contact">Add</button>
+		</div>
+	</div>
+
+	<div id="wrapper">
+
+		<%- include("../includes/navbar") %>
+
+			<%- include("../includes/sidebar") %>
+
+				<div class="content-page">
+					<div class="content">
+
+						<div class="container-fluid">
+
+							<div class="clearfix p-2 mt-3">
+								<div class="float-end">
+									<button class="btn py-2 me-2 btn-danger">Delete Customer</button>
+									<button class="btn btn-success py-2" data-bs-toggle="offcanvas"
+										data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Add
+										Customer</button>
+								</div>
+
+
+								<div class="row">
+									<div class="col-4">
+										<div class="form-control">
+											<input type="text" style="border: none; outline: none;" class="w-100 py-1"
+												placeholder="Search">
+										</div>
+									</div>
+
+									<div class="col-3">
+										<div class="dropdown">
+											<button class="btn btn-light py-2 dropdown-toggle" type="button"
+												id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
+												aria-expanded="false">
+												Sort <i class="mdi mdi-chevron-down"></i>
+											</button>
+											<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+												<a class="dropdown-item" href="#">Name</a>
+												<a class="dropdown-item" href="#">Date Added</a>
+												<hr>
+												<a class="dropdown-item" href="#">Ascending</a>
+												<a class="dropdown-item" href="#">Descending</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="card">
+								<div class="card-body">
+									<div class="dropdown float-end">
+										<a href="#" class="dropdown-toggle arrow-none card-drop"
+											data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="mdi mdi-dots-vertical"></i>
+										</a>
+										<div class="dropdown-menu dropdown-menu-end">
+											<!-- item-->
+											<a href="javascript:void(0);" class="dropdown-item">Action</a>
+											<!-- item-->
+											<a href="javascript:void(0);" class="dropdown-item">Another action</a>
+											<!-- item-->
+											<a href="javascript:void(0);" class="dropdown-item">Something else</a>
+											<!-- item-->
+											<a href="javascript:void(0);" class="dropdown-item">Separated link</a>
+										</div>
+									</div>
+									<h2 class="mb-4 header-title">Customers List</h2>
+
+									<div class="table-responsive">
+										<table class="table table-bordered mb-0">
+											<thead>
+												<tr>
+													<th></th>
+													<th>Name</th>
+													<th>Phone No.</th>
+													<th>Email</th>
+													<th>Company</th>
+													<th>Date Added</th>
+													<th><input type="checkbox" class="form-check text-center" name=""
+															id=""></th>
+												</tr>
+											</thead>
+											<tbody class="customers"></tbody>
+										</table>
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+				<!-- Vendor -->
+				<script src="/libs/jquery/jquery.min.js"></script>
+				<script src="/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+				<script src="/libs/simplebar/simplebar.min.js"></script>
+				<script src="/libs/node-waves/waves.min.js"></script>
+				<script src="/libs/waypoints/lib/jquery.waypoints.min.js"></script>
+				<script src="/libs/jquery.counterup/jquery.counterup.min.js"></script>
+				<script src="/libs/feather-icons/feather.min.js"></script>
+
+				<!-- knob plugin -->
+				<script src="/libs/jquery-knob/jquery.knob.min.js"></script>
+
+				<!--Morris Chart-->
+				<script src="/libs/morris.js06/morris.min.js"></script>
+				<script src="/libs/raphael/raphael.min.js"></script>
+
+				<!-- Dashboar init js-->
+				<script src="/js/pages/dashboard.init.js"></script>
+
+				<!-- App js-->
+				<script src="/js/app.min.js"></script>
+				<script src="/scripts/add_contact.js"></script>
+
+</body>
+
+</html>

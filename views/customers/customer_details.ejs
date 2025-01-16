@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8" />
+	<title><%- get_details.name %> | 2020/241139</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+	<meta content="Coderthemes" name="author" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+	<link rel="shortcut icon" href="/images/favicon.ico">
+
+	<link href="/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+
+	<link href="/css/icons.min.css" rel="stylesheet" type="text/css" />
+	<script>
+		const contact_id = "<%= get_details._id %>"
+		const full_name = "<%= `${first_name} ${last_name}` %>"
+		const phone_number = "<%= get_details.phone_number %>"
+	</script>
+
+	<style type="text/css">
+		.chat_container {
+			height: 450px; 
+			overflow: hidden;
+			scrollbar-width: thin;
+		}
+		.chat_container:hover {
+			overflow-y: scroll;
+		}
+	</style>
+
+</head>
+
+<body class="loading" data-layout-color="light" data-layout-mode="default" data-layout-size="fluid"
+	data-topbar-color="light" data-leftbar-position="fixed" data-leftbar-color="light" data-leftbar-size='default'
+	data-sidebar-user='true'>
+
+	<div class="modal fade" id="email_modal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myCenterModalLabel">Create Email</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+
+					<div class="form-floating mb-3">
+						<input type="email" class="form-control" id="from_email" value="<%- email %>" disabled>
+						<label for="from_email">From</label>
+					</div>
+
+					<div class="form-floating mb-3">
+						<input type="email" class="form-control" id="to_email" value="<%- get_details.email %>"
+							disabled>
+						<label for="to_email">To</label>
+					</div>
+
+					<div class="form-floating mb-3">
+						<input type="text" class="form-control" id="subject" placeholder="Subject">
+						<label for="subject">Subject</label>
+					</div>
+
+
+					<div class="form-floating">
+						<textarea class="form-control" placeholder="body of email" id="body"
+							style="height: 200px; resize: none;"></textarea>
+						<label for="body">Email</label>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button class="btn btn-success py-2 send_email">Send Email</button>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+	<div id="wrapper">
+
+		<%- include("../includes/navbar") %>
+
+			<%- include("../includes/sidebar") %>
+
+				<div class="content-page">
+					<div class="content">
+
+						<div class="container-fluid">
+
+							<div class="row">
+
+								<div class="col-lg-4">
+									<div class="card my-4">
+										<div class="card-body">
+											<div class="text-center">
+												<% if (get_details.profile_image=="null" ) { %>
+													<img src="/images/3.png" class="mx-auto d-block" alt="Contact Image"
+														style="border-radius: 50%; width: 150px;">
+													<% } else { %>
+														<img src="/uploads/<%- get_details.profile_image %>"
+															class="mx-auto d-block" alt="Contact Image"
+															style="border-radius: 50%; width: 150px;">
+														<% } %>
+
+
+															<h3 class="pt-4 text-dark"><%- get_details.name %></h3>
+															<i><%- get_details.company %></i> <br>
+															<i><%- get_details.email %></i>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-lg-8">
+									<div class="pt-4">
+										<ul class="nav nav-tabs nav-bordered nav-justified bg-white py-1">
+											<li class="nav-item">
+												<a href="#note-b2" data-bs-toggle="tab" aria-expanded="false"
+													class="nav-link active">
+													Notes
+												</a>
+											</li>
+											<li class="nav-item">
+												<a href="#email-b2" data-bs-toggle="tab" aria-expanded="true"
+													class="nav-link">
+													Email
+												</a>
+											</li>
+											<li class="nav-item">
+												<a href="#whatsapp-b2" data-bs-toggle="tab" aria-expanded="false"
+													class="nav-link">
+													Whatsapp
+												</a>
+											</li>
+											<li class="nav-item">
+												<a href="#schedule-b2" data-bs-toggle="tab" aria-expanded="false"
+													class="nav-link">
+													Schedule
+												</a>
+											</li>
+										</ul>
+										<div class="tab-content">
+											<div class="tab-pane px-2 active" id="note-b2">
+												<div class="card">
+													<div class="card-body">
+														<div class="position-relative">
+															<textarea id="note_text"
+																style="resize: none; width: 100%; height: 150px; outline: none; border: none; font-size: 16px;"
+																placeholder="Leave a note here..."></textarea>
+															<button class="btn btn-primary" id="upload_notes"
+																title="Notes are delivered to those using the platform, if the recipient is not using the platform it will be delivered by email or as a whatsapp message"
+																style="position: absolute; bottom: 10px; right: 10px;">
+																<i class="fa fa-paper-plane" aria-hidden="true"></i>
+															</button>
+														</div>
+													</div>
+												</div>
+
+												<div class="timeline note_timeline"></div>
+											</div>
+											<div class="tab-pane" id="email-b2">
+												<div class="">
+													<button class="float-end btn btn-secondary py-2"
+														data-bs-toggle="modal" data-bs-target="#email_modal">Create
+														Email</button>
+												</div>
+
+												<div class="pt-5 email_container"></div>
+											</div>
+											<div class="tab-pane" id="whatsapp-b2">
+												<% const phone_number=get_details.phone_number; if(!phone_number ||
+													phone_number==null) {%>
+													<div class="alert alert-danger">
+														<h5 class="text-center">No contact number for this customer, you
+															can try using other methods</h5>
+													</div>
+
+													<% } else {%>
+
+														<div class="card">
+
+															<div class="p-2 chat_container">
+																<div class="row mb-2">
+																	<div class="col"></div>
+																	<div class="col-6">
+																		<div style="background-position: center; width: 50px; height: 50px; border-radius: 50%; background-size: cover; background-repeat: no-repeat; background-image: url(/images/3.png);" class="float-end"></div>
+																		<div class="bg-success text-light p-2 rounded mt-0" style="margin-right: 55px;">
+																			emma
+																			
+																			<div class="text-end text-secondary">20/20/2020</div>
+																		</div>
+																	</div>
+																</div>
+
+																<div class="row mb-2">
+																	<div class="col-6">
+																		<div style="background-position: center; width: 50px; height: 50px; border-radius: 50%; background-size: cover; background-repeat: no-repeat; background-image: url(/images/3.png);" class="float-start"></div>
+																		<div class="p-2 rounded mt-0" style="margin-left: 55px; color: black; background-color: rgba(128, 128, 128, 0.363);">
+																			emma
+																			
+																			<div class="text-end text-secondary">20/20/2020</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														
+															<div style="border-top: 1px solid gray;">
+																<div class="d-flex p-1">
+																	<input class="form-control py-2 whatsapp_msg" style="outline: none; border: none;" type="text" placeholder="Message">
+																	<button class="btn btn-primary fs-4 send_btn"><i class="mdi mdi-send"></i></button>
+																</div>
+															</div>
+														</div>
+
+														<%}%>
+											</div>
+											<div class="tab-pane" id="schedule-b2">schedule</div>
+										</div>
+									</div>
+								</div>
+
+
+							</div>
+
+						</div>
+
+					</div>
+
+
+				</div>
+
+				<!-- Vendor -->
+				<script src="/libs/jquery/jquery.min.js"></script>
+				<script src="/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+				<script src="/libs/simplebar/simplebar.min.js"></script>
+				<script src="/libs/node-waves/waves.min.js"></script>
+				<script src="/libs/waypoints/lib/jquery.waypoints.min.js"></script>
+				<script src="/libs/jquery.counterup/jquery.counterup.min.js"></script>
+				<script src="/libs/feather-icons/feather.min.js"></script>
+
+				<!-- knob plugin -->
+				<script src="/libs/jquery-knob/jquery.knob.min.js"></script>
+
+				<!--Morris Chart-->
+				<script src="/libs/morris.js06/morris.min.js"></script>
+				<script src="/libs/raphael/raphael.min.js"></script>
+
+				<!-- Dashboar init js-->
+				<script src="/js/pages/dashboard.init.js"></script>
+
+				<!-- App js-->
+				<script src="/js/app.min.js"></script>
+				<script src="/scripts/contact_details.js"></script>
+
+</body>
+
+</html>

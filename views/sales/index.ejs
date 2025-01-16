@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Sales | 2020/241139</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link rel="shortcut icon" href="/images/favicon.ico">
+
+    <link href="/libs/custombox/custombox.min.css" rel="stylesheet">
+
+    <link href="/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+
+    <link href="/css/icons.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<!-- body start -->
+<body class="loading" data-layout-color="light"  data-layout-mode="default" data-layout-size="fluid" data-topbar-color="light" data-leftbar-position="fixed" data-leftbar-color="light" data-leftbar-size='default' data-sidebar-user='true'>
+
+<!-- Begin page -->
+<div id="wrapper">
+
+	<%- include('../includes/navbar') %>
+	<%- include("../includes/sidebar") %>
+
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <div class="card-body taskboard-box">
+
+                                    <h4 class="header-title mt-0 mb-3 text-primary">Upcoming</h4>
+
+                                    <ul class="sortable-list list-unstyled taskList" id="upcoming">
+                                        <li>
+                                            <div class="kanban-box">
+                                                <div class="checkbox-wrapper float-start">
+                                                    <div class="form-check form-check-success ">
+                                                        <input class="form-check-input" type="checkbox" id="singleCheckbox2"
+                                                            value="option2" aria-label="Single checkbox Two">
+                                                        <label></label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="kanban-detail">
+                                                    <span class="badge bg-danger float-end">Urgent</span>
+                                                    <h5 class="mt-0"><a href="" class="text-dark">Improve
+                                                            animation loader</a> </h5>
+                                                    <ul class="list-inline">
+                                                        <li class="list-inline-item">
+                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Username">
+                                                                <img src="/images/users/user-2.jpg" alt="img"
+                                                                    class="avatar-sm rounded-circle">
+                                                            </a>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="5 Tasks">
+                                                                <i class="mdi mdi-format-align-left"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="3 Comments">
+                                                                <i class="mdi mdi-comment-outline"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                    <div class="text-center pt-2">
+                                        <a data-bs-toggle="modal" data-bs-target="#custom-modal"
+                                            class="btn btn-primary waves-effect waves-light" data-animation="fadein"
+                                            data-plugin="custommodal" data-overlaySpeed="200" data-overlayColor="#36404a">
+                                            <i class="mdi mdi-plus"></i> Add New
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!-- end col -->
+
+
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <div class="card-body taskboard-box">
+
+                                    <h4 class="header-title mt-0 mb-3 text-warning">In Progress</h4>
+
+                                    <ul class="sortable-list list-unstyled taskList" id="inprogress">
+                                        <li>
+                                            <div class="kanban-box">
+                                                <div class="checkbox-wrapper float-start">
+                                                    <div class="form-check form-check-success">
+                                                        <input class="form-check-input" type="checkbox" id="singleCheckbox6"
+                                                            value="option6" aria-label="Single checkbox Two">
+                                                        <label></label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="kanban-detail">
+                                                    <span class="badge bg-danger float-end">Urgent</span>
+                                                    <h5 class="mt-0"><a href="" class="text-dark">File
+                                                            Uploads on cards</a> </h5>
+                                                    <ul class="list-inline">
+                                                        <li class="list-inline-item">
+                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Username">
+                                                                <img src="/images/users/user-6.jpg" alt="img"
+                                                                    class="avatar-sm rounded-circle">
+                                                            </a>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="5 Tasks">
+                                                                <i class="mdi mdi-format-align-left"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="3 Comments">
+                                                                <i class="mdi mdi-comment-outline"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                    <div class="text-center pt-2">
+                                        <a data-bs-toggle="modal" data-bs-target="#custom-modal"
+                                            class="btn btn-primary waves-effect waves-light" data-animation="fadein"
+                                            data-plugin="custommodal" data-overlaySpeed="200" data-overlayColor="#36404a">
+                                            <i class="mdi mdi-plus"></i> Add New
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+
+
+                        <div class="col-xl-4">
+                            <div class="card">
+                                <div class="card-body taskboard-box">
+
+                                    <h4 class="header-title mt-0 mb-3 text-success">Complete</h4>
+
+                                    <ul class="sortable-list list-unstyled taskList" id="completed">
+                                        <li>
+                                            <div class="kanban-box">
+                                                <div class="checkbox-wrapper float-start">
+                                                    <div class="form-check form-check-success ">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="singleCheckbox10" value="option10"
+                                                            aria-label="Single checkbox Two">
+                                                        <label></label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="kanban-detail">
+                                                    <span class="badge bg-danger float-end">Urgent</span>
+                                                    <h5 class="mt-0"><a href="" class="text-dark">Improve
+                                                            animation loader</a> </h5>
+                                                    <ul class="list-inline">
+                                                        <li class="list-inline-item">
+                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Username">
+                                                                <img src="/images/users/user-9.jpg" alt="img"
+                                                                    class="avatar-sm rounded-circle">
+                                                            </a>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="5 Tasks">
+                                                                <i class="mdi mdi-format-align-left"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="3 Comments">
+                                                                <i class="mdi mdi-comment-outline"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                    <div class="text-center pt-2">
+                                        <a class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
+                                            data-bs-target="#custom-modal" data-animation="fadein" data-plugin="custommodal"
+                                            data-overlaySpeed="200" data-overlayColor="#36404a">
+                                            <i class="mdi mdi-plus"></i> Add New
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!-- end col -->
+
+                    </div><!-- end row -->
+
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+
+        </div>
+
+</div>
+
+    <div class="modal fade" id="custom-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myCenterModalLabel">Add New</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="mb-3">
+                            <label class="form-label" for="name">Task Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="assign">Assign to</label>
+                                    <input type="text" class="form-control" id="assign" placeholder="">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="priority">Priority</label>
+                                    <input type="text" class="form-control" id="priority" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="Sdate">Start Date</label>
+                                    <input type="text" class="form-control" id="Sdate" placeholder="">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="Ddate">Due Date</label>
+                                    <input type="text" class="form-control" id="Ddate" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success waves-effect waves-light me-1">Save</button>
+                        <button type="button" class="btn btn-danger waves-effect waves-light"
+                            data-bs-dismiss="modal">Cancel</button>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+<!-- Right Sidebar -->
+<div class="right-bar">
+
+    <div data-simplebar class="h-100">
+
+        <div class="rightbar-title">
+            <a href="javascript:void(0);" class="right-bar-toggle float-end">
+                <i class="mdi mdi-close"></i>
+            </a>
+            <h4 class="font-16 m-0 text-white">Theme Customizer</h4>
+        </div>
+        
+        <!-- Tab panes -->
+        <div class="tab-content pt-0">  
+
+            <div class="tab-pane active" id="settings-tab" role="tabpanel">
+
+                <div class="p-3">
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Customize </strong> the overall color scheme, Layout, etc.
+                    </div>
+
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Color Scheme</h6>
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="layout-color" value="light"
+                            id="light-mode-check" checked />
+                        <label class="form-check-label" for="light-mode-check">Light Mode</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="layout-color" value="dark"
+                            id="dark-mode-check" />
+                        <label class="form-check-label" for="dark-mode-check">Dark Mode</label>
+                    </div>
+
+                    <!-- Width -->
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Width</h6>
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="layout-size" value="fluid" id="fluid" checked />
+                        <label class="form-check-label" for="fluid-check">Fluid</label>
+                    </div>
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="layout-size" value="boxed" id="boxed" />
+                        <label class="form-check-label" for="boxed-check">Boxed</label>
+                    </div>
+
+                    <!-- Menu positions -->
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Menus (Leftsidebar and Topbar) Positon</h6>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftbar-position" value="fixed" id="fixed-check"
+                            checked />
+                        <label class="form-check-label" for="fixed-check">Fixed</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftbar-position" value="scrollable"
+                            id="scrollable-check" />
+                        <label class="form-check-label" for="scrollable-check">Scrollable</label>
+                    </div>
+
+                    <!-- Left Sidebar-->
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Left Sidebar Color</h6>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftbar-color" value="light" id="light" />
+                        <label class="form-check-label" for="light-check">Light</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftbar-color" value="dark" id="dark" checked/>
+                        <label class="form-check-label" for="dark-check">Dark</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftbar-color" value="brand" id="brand" />
+                        <label class="form-check-label" for="brand-check">Brand</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-3">
+                        <input type="checkbox" class="form-check-input" name="leftbar-color" value="gradient" id="gradient" />
+                        <label class="form-check-label" for="gradient-check">Gradient</label>
+                    </div>
+
+                    <!-- size -->
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Left Sidebar Size</h6>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftbar-size" value="default"
+                            id="default-size-check" checked />
+                        <label class="form-check-label" for="default-size-check">Default</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftbar-size" value="condensed"
+                            id="condensed-check" />
+                        <label class="form-check-label" for="condensed-check">Condensed <small>(Extra Small size)</small></label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="leftbar-size" value="compact"
+                            id="compact-check" />
+                        <label class="form-check-label" for="compact-check">Compact <small>(Small size)</small></label>
+                    </div>
+
+                    <!-- User info -->
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Sidebar User Info</h6>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="sidebar-user" value="true" id="sidebaruser-check" />
+                        <label class="form-check-label" for="sidebaruser-check">Enable</label>
+                    </div>
+
+
+                    <!-- Topbar -->
+                    <h6 class="fw-medium font-14 mt-4 mb-2 pb-1">Topbar</h6>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="topbar-color" value="dark" id="darktopbar-check"
+                            checked />
+                        <label class="form-check-label" for="darktopbar-check">Dark</label>
+                    </div>
+
+                    <div class="form-check form-switch mb-1">
+                        <input type="checkbox" class="form-check-input" name="topbar-color" value="light" id="lighttopbar-check" />
+                        <label class="form-check-label" for="lighttopbar-check">Light</label>
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <button class="btn btn-primary" id="resetBtn">Reset to Default</button>
+                        <a href="https://1.envato.market/admintoadmin" class="btn btn-danger mt-3" target="_blank"><i class="mdi mdi-basket me-1"></i> Purchase Now</a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div> <!-- end slimscroll-menu-->
+</div>
+<!-- /Right-bar -->
+
+<!-- Right bar overlay-->
+<div class="rightbar-overlay"></div>
+
+        <!-- Vendor -->
+        <script src="/libs/jquery/jquery.min.js"></script>
+        <script src="/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/libs/simplebar/simplebar.min.js"></script>
+        <script src="/libs/node-waves/waves.min.js"></script>
+        <script src="/libs/waypoints/lib/jquery.waypoints.min.js"></script>
+        <script src="/libs/jquery.counterup/jquery.counterup.min.js"></script>
+        <script src="/libs/feather-icons/feather.min.js"></script>
+
+        <!-- <script src="/libs/sortablejs/Sortable.min.js"></script> -->
+
+        <!-- Jquery Ui js -->
+        <script src="/libs/jquery-ui/jquery-ui.min.js"></script>
+
+        <!-- Modal-Effect -->
+        <script src="/libs/custombox/custombox.min.js"></script>
+
+        <!-- Init -->
+        <script src="/js/pages/kanban.init.js"></script>
+
+        <!-- draggable init -->
+        <!-- <script src="/js/pages/draggable.init.js"></script> -->
+
+        <!-- App js -->
+        <script src="/js/app.min.js"></script>
+
+
+</body>
+
+</html>
