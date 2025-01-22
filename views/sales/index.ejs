@@ -39,49 +39,9 @@
                             <div class="card">
                                 <div class="card-body taskboard-box">
 
-                                    <h4 class="header-title mt-0 mb-3 text-primary">Upcoming</h4>
+                                    <h4 class="header-title mt-0 mb-3 text-primary">Lead</h4>
 
-                                    <ul class="sortable-list list-unstyled taskList" id="upcoming">
-                                        <li>
-                                            <div class="kanban-box">
-                                                <div class="checkbox-wrapper float-start">
-                                                    <div class="form-check form-check-success ">
-                                                        <input class="form-check-input" type="checkbox" id="singleCheckbox2"
-                                                            value="option2" aria-label="Single checkbox Two">
-                                                        <label></label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="kanban-detail">
-                                                    <span class="badge bg-danger float-end">Urgent</span>
-                                                    <h5 class="mt-0"><a href="" class="text-dark">Improve
-                                                            animation loader</a> </h5>
-                                                    <ul class="list-inline">
-                                                        <li class="list-inline-item">
-                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Username">
-                                                                <img src="/images/users/user-2.jpg" alt="img"
-                                                                    class="avatar-sm rounded-circle">
-                                                            </a>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="5 Tasks">
-                                                                <i class="mdi mdi-format-align-left"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="3 Comments">
-                                                                <i class="mdi mdi-comment-outline"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                    </ul>
+                                    <ul class="sortable-list list-unstyled taskList" id="upcoming"></ul>
                                 </div>
                             </div>
 
@@ -95,37 +55,21 @@
                                     <h4 class="header-title mt-0 mb-3 text-warning">In Progress</h4>
 
                                     <ul class="sortable-list list-unstyled taskList" id="inprogress">
-                                        <li>
+                                        <li id='${customer.id}' draggable="true">
                                             <div class="kanban-box">
-                                                <div class="checkbox-wrapper float-start">
-                                                    <div class="form-check form-check-success">
-                                                        <input class="form-check-input" type="checkbox" id="singleCheckbox6"
-                                                            value="option6" aria-label="Single checkbox Two">
-                                                        <label></label>
-                                                    </div>
-                                                </div>
 
                                                 <div class="kanban-detail">
-                                                    <span class="badge bg-danger float-end">Urgent</span>
-                                                    <h5 class="mt-0"><a href="" class="text-dark">File
-                                                            Uploads on cards</a> </h5>
+                                                    <h5 class="mt-0"><a href="" class="text-dark">${customer.name}</a> </h5>
                                                     <ul class="list-inline">
                                                         <li class="list-inline-item">
-                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            <a href="/customers/${customer.id}" data-bs-toggle="tooltip" data-bs-placement="top"
                                                                 title="Username">
-                                                                <img src="/images/users/user-6.jpg" alt="img"
+                                                                <img src="/images/upload.png" alt="img"
                                                                     class="avatar-sm rounded-circle">
                                                             </a>
                                                         </li>
                                                         <li class="list-inline-item">
-                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="5 Tasks">
-                                                                <i class="mdi mdi-format-align-left"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="3 Comments">
+                                                            <a href="/customers/${customer.id}" data-bs-toggle="tooltip" data-bs-placement="top">
                                                                 <i class="mdi mdi-comment-outline"></i>
                                                             </a>
                                                         </li>
@@ -133,7 +77,6 @@
                                                 </div>
                                             </div>
                                         </li>
-
                                     </ul>
                                 </div>
                             </div>
@@ -144,50 +87,9 @@
                             <div class="card">
                                 <div class="card-body taskboard-box">
 
-                                    <h4 class="header-title mt-0 mb-3 text-success">Complete</h4>
+                                    <h4 class="header-title mt-0 mb-3 text-success">Customer</h4>
 
-                                    <ul class="sortable-list list-unstyled taskList" id="completed">
-                                        <li>
-                                            <div class="kanban-box">
-                                                <div class="checkbox-wrapper float-start">
-                                                    <div class="form-check form-check-success ">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            id="singleCheckbox10" value="option10"
-                                                            aria-label="Single checkbox Two">
-                                                        <label></label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="kanban-detail">
-                                                    <span class="badge bg-danger float-end">Urgent</span>
-                                                    <h5 class="mt-0"><a href="" class="text-dark">Improve
-                                                            animation loader</a> </h5>
-                                                    <ul class="list-inline">
-                                                        <li class="list-inline-item">
-                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Username">
-                                                                <img src="/images/users/user-9.jpg" alt="img"
-                                                                    class="avatar-sm rounded-circle">
-                                                            </a>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="5 Tasks">
-                                                                <i class="mdi mdi-format-align-left"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="3 Comments">
-                                                                <i class="mdi mdi-comment-outline"></i>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                    </ul>
+                                    <ul class="sortable-list list-unstyled taskList" id="completed"></ul>
                                 </div>
                             </div>
 

@@ -24,6 +24,11 @@ const customer_schema = mongoose.Schema({
 		required : true,
 		type : String
 	},
+	status : {
+		required : true,
+		type : String,
+		default : "lead"
+	},
 	date_added : {
 		required : true,
 		type : String
