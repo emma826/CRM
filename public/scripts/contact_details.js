@@ -1,25 +1,5 @@
 const upload_notes = document.querySelector("#upload_notes")
 const send_email = document.querySelector(".send_email")
-const send_btn = document.querySelector(".send_btn")
-
-send_btn.addEventListener("click", async () => {
-	const whatsapp_msg = document.querySelector(".whatsapp_msg").value
-
-	var params = {
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({ message: whatsapp_msg.trim(), contact_id }),
-		method: "POST"
-	}
-
-	await fetch("/customers/send_whatsapp", params)
-		.then(res => res.json())
-		.then(data => {
-
-		})
-		.catch(err => console.log(err))
-})
 
 send_email.addEventListener("click", async () => {
 	const from_email = document.querySelector("#from_email").value

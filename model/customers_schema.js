@@ -21,7 +21,6 @@ const customer_schema = mongoose.Schema({
 		type: String
 	},
 	profile_image: {
-		required: true,
 		type: String
 	},
 	status: {
@@ -31,7 +30,7 @@ const customer_schema = mongoose.Schema({
 	},
 	date_added: {
 		required: true,
-		type: String
+		type: Number
 	}
 }, {
 	collection: "Customer",

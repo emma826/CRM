@@ -4,7 +4,7 @@ const path = require("path")
 const body_parser = require("body-parser")
 const fileUpload = require("express-fileupload")
 const { get_user_details, get_customers, get_customer_details } = require("./middleware")
-const customer = require("../model/customers_schema")
+const { customer } = require("../model/customers_schema")
 const notes = require("../model/noteSchema")
 const interaction = require("../model/interaction_schema")
 const email = require("../model/email_schema")
@@ -43,7 +43,7 @@ router.post("/add_contact", async (req, res) => {
 				await profileImage.mv(path.join(__dirname, "../public", "uploads", uniqueFilename))
 			}
 
-			await customer.create({ user_id: id, name, phone_number: country_code + telephone, email, company, profile_image: uniqueFilename, date_added: date.getTime() })
+			await customer.create({ user_id: id, name, phone_number: country_code + telephone, email, company, profile_image: uniqueFilename, status: "customer", date_added: date.getTime() })
 
 			return res.status(200).json({ success: "New contact added" })
 

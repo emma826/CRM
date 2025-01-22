@@ -98,7 +98,7 @@
 										<div class="card-body">
 											<div class="text-center">
 												<% if (get_details.profile_image=="null" ) { %>
-													<img src="/images/3.png" class="mx-auto d-block" alt="Contact Image"
+													<img src="/images/upload.png" class="mx-auto d-block" alt="Contact Image"
 														style="border-radius: 50%; width: 150px;">
 													<% } else { %>
 														<img src="/uploads/<%- get_details.profile_image %>"
@@ -130,18 +130,6 @@
 													Email
 												</a>
 											</li>
-											<li class="nav-item">
-												<a href="#whatsapp-b2" data-bs-toggle="tab" aria-expanded="false"
-													class="nav-link">
-													Whatsapp
-												</a>
-											</li>
-											<li class="nav-item">
-												<a href="#schedule-b2" data-bs-toggle="tab" aria-expanded="false"
-													class="nav-link">
-													Schedule
-												</a>
-											</li>
 										</ul>
 										<div class="tab-content">
 											<div class="tab-pane px-2 active" id="note-b2">
@@ -171,7 +159,7 @@
 
 												<div class="pt-5 email_container"></div>
 											</div>
-											<div class="tab-pane" id="whatsapp-b2">
+											<!-- <div class="tab-pane" id="whatsapp-b2">
 												<% const phone_number=get_details.phone_number; if(!phone_number ||
 													phone_number==null) {%>
 													<div class="alert alert-danger">
@@ -217,8 +205,7 @@
 														</div>
 
 														<%}%>
-											</div>
-											<div class="tab-pane" id="schedule-b2">schedule</div>
+											</div> -->
 										</div>
 									</div>
 								</div>

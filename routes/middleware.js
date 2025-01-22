@@ -117,19 +117,19 @@ const get_dashboard = async (user_id) => {
 
 		const customersThisMonth = await customer.countDocuments({
 			user_id,
-			status : "customer",
-			createdAt: {
-				$gte: new Date(currentYear, currentMonth - 1, 1),
-				$lt: new Date(currentYear, currentMonth, 1)
+			status: "customer",
+			date_added: {
+				$gte: new Date(currentYear, currentMonth - 1, 1).getTime(),
+				$lt: new Date(currentYear, currentMonth, 1).getTime()
 			}
 		});
 
 		const customersLastMonth = await customer.countDocuments({
 			user_id,
 			status: "customer",
-			createdAt: {
-				$gte: new Date(lastMonthYear, lastMonth - 1, 1),
-				$lt: new Date(currentYear, currentMonth - 1, 1)
+			date_added: {
+				$gte: new Date(lastMonthYear, lastMonth - 1, 1).getTime(),
+				$lt: new Date(currentYear, currentMonth - 1, 1).getTime()
 			}
 		});
 
@@ -138,18 +138,18 @@ const get_dashboard = async (user_id) => {
 		const leadsThisMonth = await customer.countDocuments({
 			user_id,
 			status: "lead",
-			createdAt: {
-				$gte: new Date(currentYear, currentMonth - 1, 1),
-				$lt: new Date(currentYear, currentMonth, 1)
+			date_added: {
+				$gte: new Date(currentYear, currentMonth - 1, 1).getTime(),
+				$lt: new Date(currentYear, currentMonth, 1).getTime()
 			}
 		});
 
 		const leadsLastMonth = await customer.countDocuments({
 			user_id,
 			status: "lead",
-			createdAt: {
-				$gte: new Date(lastMonthYear, lastMonth - 1, 1),
-				$lt: new Date(currentYear, currentMonth - 1, 1)
+			date_added: {
+				$gte: new Date(lastMonthYear, lastMonth - 1, 1).getTime(),
+				$lt: new Date(currentYear, currentMonth - 1, 1).getTime()
 			}
 		});
 
@@ -207,15 +207,15 @@ const get_dashboard = async (user_id) => {
 				$match: {
 					user_id,
 					status: "lead",
-					createdAt: {
-						$gte: new Date(currentYear, currentMonth - 1, 1),
-						$lt: new Date(currentYear, currentMonth, 1)
+					date_added: {
+						$gte: new Date(currentYear, currentMonth - 1, 1).getTime(),
+						$lt: new Date(currentYear, currentMonth, 1).getTime()
 					}
 				}
 			},
 			{
 				$group: {
-					_id: { $dayOfMonth: "$createdAt" },
+					_id: { $dayOfMonth: { $toDate: "$date_added" } },
 					count: { $sum: 1 }
 				}
 			},
@@ -229,15 +229,15 @@ const get_dashboard = async (user_id) => {
 				$match: {
 					user_id,
 					status: "customer",
-					createdAt: {
-						$gte: new Date(currentYear, currentMonth - 1, 1),
-						$lt: new Date(currentYear, currentMonth, 1)
+					date_added: {
+						$gte: new Date(currentYear, currentMonth - 1, 1).getTime(),
+						$lt: new Date(currentYear, currentMonth, 1).getTime()
 					}
 				}
 			},
 			{
 				$group: {
-					_id: { $dayOfMonth: "$createdAt" },
+					_id: { $dayOfMonth: { $toDate: "$date_added" } },
 					count: { $sum: 1 }
 				}
 			},

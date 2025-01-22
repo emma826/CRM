@@ -28,12 +28,12 @@ app.use("/auth", auth)
 
 app.get("/", get_user_details, async (req, res) => {
 	const { id, first_name, last_name, email } = req.user
-	const dashboard = await get_dashboard(id)
 
 	if (!id) {
 		res.redirect("/login")
 	}
 	else {
+		const dashboard = await get_dashboard(id)
 		res.render('index', { id, first_name, last_name, email, dashboard })
 	}
 })
