@@ -6,7 +6,7 @@ const path = require("path")
 const mongoose = require("mongoose")
 const cookie_parser = require("cookie-parser")
 const body_parser = require('body-parser')
-const { get_user_details } = require('./routes/middleware')
+const { get_dashboard, get_user_details } = require('./routes/middleware')
 
 mongoose.connect('mongodb://0.0.0.0:27017/final_year_project')
 
@@ -26,14 +26,15 @@ app.use("/interactions", interactions)
 app.use('/customers', customers)
 app.use("/auth", auth)
 
-app.get("/", get_user_details, (req, res) => {
+app.get("/", get_user_details, async (req, res) => {
 	const { id, first_name, last_name, email } = req.user
+	const dashboard = await get_dashboard(id)
 
 	if (!id) {
 		res.redirect("/login")
 	}
 	else {
-		res.render('index', { id, first_name, last_name, email })
+		res.render('index', { id, first_name, last_name, email, dashboard })
 	}
 })
 

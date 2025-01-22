@@ -4,7 +4,7 @@ const cookie_parser = require("cookie-parser")
 const jwt = require("jsonwebtoken")
 const env = require("dotenv").config()
 const user = require("../model/user_schema")
-const customer = require("../model/customers_schema")
+const { customer } = require("../model/customers_schema")
 const interaction = require("../model/interaction_schema")
 
 router.use(cookie_parser())
@@ -94,18 +94,186 @@ const get_customer_details = async (user_id, customer_id) => {
 
 const get_interactions_details = async (interaction_id, user_id) => {
 	try {
-		const get_interactions = await interaction.findOne({_id : interaction_id, user_id})
+		const get_interactions = await interaction.findOne({ _id: interaction_id, user_id })
 
-		if(!get_interactions.id) {
+		if (!get_interactions.id) {
 			return null
 		}
 		else {
 			return get_interactions
 		}
 	}
-	catch(error) {
+	catch (error) {
 		return null
 	}
 }
 
-module.exports = { get_user_details, get_customers, get_customer_details, get_interactions_details }
+const get_dashboard = async (user_id) => {
+	try {
+		const currentMonth = new Date().getMonth() + 1;
+		const lastMonth = currentMonth === 1 ? 12 : currentMonth - 1;
+		const currentYear = new Date().getFullYear();
+		const lastMonthYear = currentMonth === 1 ? currentYear - 1 : currentYear;
+
+		const customersThisMonth = await customer.countDocuments({
+			user_id,
+			status : "customer",
+			createdAt: {
+				$gte: new Date(currentYear, currentMonth - 1, 1),
+				$lt: new Date(currentYear, currentMonth, 1)
+			}
+		});
+
+		const customersLastMonth = await customer.countDocuments({
+			user_id,
+			status: "customer",
+			createdAt: {
+				$gte: new Date(lastMonthYear, lastMonth - 1, 1),
+				$lt: new Date(currentYear, currentMonth - 1, 1)
+			}
+		});
+
+		const customerPercentageChange = ((customersThisMonth - customersLastMonth) / (customersLastMonth || 1)) * 100;
+
+		const leadsThisMonth = await customer.countDocuments({
+			user_id,
+			status: "lead",
+			createdAt: {
+				$gte: new Date(currentYear, currentMonth - 1, 1),
+				$lt: new Date(currentYear, currentMonth, 1)
+			}
+		});
+
+		const leadsLastMonth = await customer.countDocuments({
+			user_id,
+			status: "lead",
+			createdAt: {
+				$gte: new Date(lastMonthYear, lastMonth - 1, 1),
+				$lt: new Date(currentYear, currentMonth - 1, 1)
+			}
+		});
+
+		const leadsPercentageChange = ((leadsThisMonth - leadsLastMonth) / (leadsLastMonth || 1)) * 100;
+
+		const interactionsThisMonth = await interaction.countDocuments({
+			user_id,
+			createdAt: {
+				$gte: new Date(currentYear, currentMonth - 1, 1),
+				$lt: new Date(currentYear, currentMonth, 1)
+			}
+		});
+
+		const interactionsLastMonth = await interaction.countDocuments({
+			user_id,
+			createdAt: {
+				$gte: new Date(lastMonthYear, lastMonth - 1, 1),
+				$lt: new Date(currentYear, currentMonth - 1, 1)
+			}
+		});
+
+		const interactionPercentageChange = ((interactionsThisMonth - interactionsLastMonth) / (interactionsLastMonth || 1)) * 100;
+		const interactionsPerDay = await interaction.aggregate([
+			{
+				$match: {
+					user_id,
+					createdAt: {
+						$gte: new Date(currentYear, currentMonth - 1, 1),
+						$lt: new Date(currentYear, currentMonth, 1)
+					}
+				}
+			},
+			{
+				$group: {
+					_id: { $dayOfMonth: "$createdAt" },
+					count: { $sum: 1 }
+				}
+			},
+			{
+				$sort: { _id: 1 }
+			}
+		]);
+
+		const interactionsPerDayData = Array.from({ length: new Date(currentYear, currentMonth, 0).getDate() }, (_, i) => {
+			const day = i + 1;
+			const interaction = interactionsPerDay.find(interaction => interaction._id === day);
+			return {
+				day,
+				count: interaction ? interaction.count : 0
+			};
+		});
+		
+		const leadsPerDay = await customer.aggregate([
+			{
+				$match: {
+					user_id,
+					status: "lead",
+					createdAt: {
+						$gte: new Date(currentYear, currentMonth - 1, 1),
+						$lt: new Date(currentYear, currentMonth, 1)
+					}
+				}
+			},
+			{
+				$group: {
+					_id: { $dayOfMonth: "$createdAt" },
+					count: { $sum: 1 }
+				}
+			},
+			{
+				$sort: { _id: 1 }
+			}
+		]);
+
+		const customersPerDay = await customer.aggregate([
+			{
+				$match: {
+					user_id,
+					status: "customer",
+					createdAt: {
+						$gte: new Date(currentYear, currentMonth - 1, 1),
+						$lt: new Date(currentYear, currentMonth, 1)
+					}
+				}
+			},
+			{
+				$group: {
+					_id: { $dayOfMonth: "$createdAt" },
+					count: { $sum: 1 }
+				}
+			},
+			{
+				$sort: { _id: 1 }
+			}
+		]);
+
+		const conversionData = Array.from({ length: new Date(currentYear, currentMonth, 0).getDate() }, (_, i) => {
+			const day = i + 1;
+			const lead = leadsPerDay.find(lead => lead._id === day);
+			const customer = customersPerDay.find(customer => customer._id === day);
+			return {
+				day,
+				leads: lead ? lead.count : 0,
+				customers: customer ? customer.count : 0
+			};
+		});
+
+		return {
+			customerPercentageChange,
+			leadsPercentageChange,
+			interactionPercentageChange,
+			interactionsPerDay: interactionsPerDayData,
+			conversionData,
+			leadsThisMonth,
+			customersThisMonth
+		};
+		
+    } catch (error) {
+		console.log(error);
+		return {
+			message: "Server error, please try again later",
+			status: 500
+		};
+	}
+}
+
+module.exports = { get_dashboard, get_user_details, get_customers, get_customer_details, get_interactions_details, get_dashboard }

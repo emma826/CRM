@@ -39,18 +39,18 @@
 									<div class="card">
 										<div class="card-body">
 
-											<h4 class="header-title mt-0 mb-4">Total Leads</h4>
+											<h4 class="header-title mt-0 mb-4">Total Customers</h4>
 
 											<div class="widget-chart-1">
 												<div class="widget-chart-box-1 float-start" dir="ltr">
 													<input data-plugin="knob" data-width="70" data-height="70"
-														data-fgColor="#f05050 " data-bgColor="#F9B9B9" value="50"
+														data-fgColor="#000 " data-bgColor="#33AA34" value="<%- dashboard.customerPercentageChange %>"
 														data-skin="tron" data-angleOffset="180" data-readOnly=true
 														data-thickness=".15" />
 												</div>
 
 												<div class="widget-detail-1 text-end">
-													<h2 class="fw-normal pt-2 mb-1"> 256 </h2>
+													<h2 class="fw-normal pt-2 mb-1"> <%- dashboard.customersThisMonth %> </h2>
 													<p class="text-muted mb-1">This month</p>
 												</div>
 											</div>
@@ -65,16 +65,16 @@
 
 											<div class="widget-box-2">
 												<div class="widget-detail-2 text-end">
-													<span class="badge bg-success rounded-pill float-start mt-3">32% <i
+													<span class="badge bg-success rounded-pill float-start mt-3"> <%- dashboard.leadsPercentageChange %> <i
 															class="mdi mdi-trending-up"></i> </span>
 													<h2 class="fw-normal mb-1"> 8451 </h2>
 													<p class="text-muted mb-3">This Month</p>
 												</div>
 												<div class="progress progress-bar-alt-success progress-sm">
 													<div class="progress-bar bg-success" role="progressbar"
-														aria-valuenow="77" aria-valuemin="0" aria-valuemax="100"
-														style="width: 77%;">
-														<span class="visually-hidden">77%</span>
+														aria-valuenow="<%- dashboard.leadsPercentageChange %>" aria-valuemin="0" aria-valuemax="100"
+														style="width: <%- dashboard.leadsPercentageChange %>%;">
+														<span class="visually-hidden"><%- dashboard.leadsPercentageChange %></span>
 													</div>
 												</div>
 											</div>
