@@ -30,12 +30,11 @@
 
 		<div class="offcanvas-body">
 
-			<div class="alert alert-danger error" style="display: none;"></div>
-			<div class="alert alert-success success" style="display: none;"></div>
-
 			<div class="mb-3">
-				<div class="profile_img_show" style="width: 120px; height: 120px; margin: auto; border-radius: 500%; background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url(/images/upload.png); overflow: hidden; cursor: pointer; border: 2px solid black;">
-					<input type="file" id="profile_img" style="display: block; width: 100%; height: 120px; opacity: 0; cursor: pointer;">
+				<div class="profile_img_show"
+					style="width: 120px; height: 120px; margin: auto; border-radius: 500%; background-position: center; background-repeat: no-repeat; background-size: cover; background-image: url(/images/upload.png); overflow: hidden; cursor: pointer; border: 2px solid black;">
+					<input type="file" id="profile_img"
+						style="display: block; width: 100%; height: 120px; opacity: 0; cursor: pointer;">
 				</div>
 			</div>
 
@@ -46,6 +45,24 @@
 			<div class="form-floating mb-3">
 				<input type="email" class="form-control" id="email" placeholder="jonhdoe@example.com">
 				<label for="email">Email Address</label>
+			</div>
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<div class="form-floating">
+						<input type="date" class="form-control" id="dob" placeholder="Date of Birth">
+						<label for="dob">Date of Birth</label>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-floating">
+						<select class="form-select" id="gender" aria-label="Gender">
+							<option selected>Select Gender</option>
+							<option value="male">Male</option>
+							<option value="female">Female</option>
+						</select>
+						<label for="gender">Gender</label>
+					</div>
+				</div>
 			</div>
 			<div class="input-group mb-3 fw-900">
 				<div class="input-group-prepend">
@@ -58,12 +75,37 @@
 						<option value="+81"> +81 (Japan)</option>
 					</select>
 				</div>
-				<input type="tel" class="form-control py-2" id="telephone" placeholder="phone_number" aria-label="phone" aria-describedby="basic-addon1">
+				<input type="tel" class="form-control py-2" id="telephone" placeholder="phone_number" aria-label="phone"
+					aria-describedby="basic-addon1">
 			</div>
 			<div class="form-floating mb-3">
-				<input type="text" class="form-control" id="company" placeholder="Final Year">
+				<input type="text" class="form-control" id="physical_address" placeholder="Physical Address">
+				<label for="physical_address">Physical Address</label>
+			</div>
+			<div class="form-floating mb-3">
+				<% if (category.length === 0) { %>
+					<div class="alert alert-warning">Please create a category first.</div>
+				<% } else { %>
+					<select class="form-select" id="category" aria-label="Category">
+						<option selected>Select Category</option>
+						<% category.forEach(function(cat) { %>
+							<option value="<%= cat._id %>"><%= cat.category %></option>
+						<% }); %>
+					</select>
+					<label for="category">Category</label>
+				<% } %>
+			</div>
+			<div class="form-floating mb-3">
+				<input type="text" class="form-control" id="company" placeholder="Company">
 				<label for="company">Company</label>
 			</div>
+			<div class="form-floating mb-3">
+				<input type="text" class="form-control" id="job_title" placeholder="Job Title">
+				<label for="job_title">Job Title</label>
+			</div>
+
+			<div class="alert alert-danger error" style="display: none;"></div>
+			<div class="alert alert-success success" style="display: none;"></div>
 
 			<button class="btn btn-success mx-auto d-block py-2 px-4 add_contact">Add</button>
 		</div>

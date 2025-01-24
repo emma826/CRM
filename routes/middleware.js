@@ -4,7 +4,7 @@ const cookie_parser = require("cookie-parser")
 const jwt = require("jsonwebtoken")
 const env = require("dotenv").config()
 const user = require("../model/user_schema")
-const { customer } = require("../model/customers_schema")
+const { customer, category_model } = require("../model/customers_schema")
 const interaction = require("../model/interaction_schema")
 
 router.use(cookie_parser())
@@ -105,6 +105,24 @@ const get_interactions_details = async (interaction_id, user_id) => {
 	}
 	catch (error) {
 		return null
+	}
+}
+
+const get_category = async (user_id) => {
+	try {
+		const get_category = await category_model.find({ user_id })
+		return {
+			success: true,
+			message: get_category
+		}
+	}
+	catch (error) {
+		console.log(error)
+		return {
+			message: "Server error, please try again later",
+			status: 500,
+			success: false
+		}
 	}
 }
 
@@ -276,4 +294,4 @@ const get_dashboard = async (user_id) => {
 	}
 }
 
-module.exports = { get_dashboard, get_user_details, get_customers, get_customer_details, get_interactions_details, get_dashboard }
+module.exports = { get_dashboard, get_user_details, get_customers, get_customer_details, get_interactions_details, get_dashboard, get_category }

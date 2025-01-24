@@ -3,17 +3,18 @@ const router = express.Router()
 const path = require("path")
 const body_parser = require("body-parser")
 const fileUpload = require("express-fileupload")
-const { get_user_details, get_customers, get_customer_details } = require("./middleware")
-const { customer } = require("../model/customers_schema")
+const { get_user_details, get_customers, get_customer_details, get_category } = require("./middleware")
+const { customer, category_model } = require("../model/customers_schema")
 const notes = require("../model/noteSchema")
 const interaction = require("../model/interaction_schema")
 const email = require("../model/email_schema")
+const { reverse } = require("dns")
 
 router.use(get_user_details)
 router.use(body_parser.json())
 router.use(fileUpload())
 
-router.post("/add_contact", async (req, res) => {
+router.post("/add_customers/:category", async (req, res) => {
 	const { id } = req.user;
 	const { name, email, country_code, telephone, company } = req.body;
 
@@ -189,15 +190,79 @@ router.post("/get_emails", async (req, res) => {
 	}
 })
 
+router.post("/add_category", async (req, res) => {
+	const { id } = req.user
+	const { category } = req.body
+
+	if (!id) {
+		return res.status(400).json({
+			success: false,
+			message: "Session not found, please login to fix issue"
+		})
+	}
+
+	if (!category) {
+		return res.status(400).json({
+			success: false,
+			message: "Please input a category"
+		})
+	}
+
+	try {
+		const create_category = await category_model.create({ user_id: id, category })
+		return res.status(200).json({
+			success: true,
+			message: create_category
+		})
+	} catch (error) {
+		console.log(error)
+		return res.status(500).json({
+			success: false,
+			message: "Server error, please try again later"
+		})
+	}
+})
+
 router.get("/", async (req, res) => {
 	const { id, first_name, last_name, email } = req.user
 	const url = path.join("customers", "index")
 
 	if (id) {
-		res.render(url, { id, first_name, last_name, email })
+		
+		await get_category(id).then((data) => {
+			res.render(url, { id, first_name, last_name, email, category: data.message.reverse() })
+		})
 	}
 	else {
 		res.redirect("/login")
+	}
+})
+
+router.get("/load_category", async (req, res) => {
+	const { id } = req.user
+
+	if (!id) {
+		return res.status(400).json({
+			success: false,
+			message: "Session not found, please login to fix issue"
+		})
+	}
+
+	try {
+
+		const get_category = await category_model.find({user_id : id})
+
+		return res.status(200).json({
+			success: true,
+			message: get_category
+		})
+
+	} catch (error) {
+		console.log(error)
+		return res.status(500).json({
+			success: false,
+			message: "Server error, please try again later"
+		})
 	}
 })
 
@@ -205,8 +270,8 @@ router.get("/create_lead", async (req, res) => {
 	const { id, first_name, last_name, email } = req.user
 	const url = path.join("customers", "create_lead")
 
-	if(id) {
-		res.render(url, {id, first_name, last_name, email})
+	if (id) {
+		res.render(url, { id, first_name, last_name, email })
 	}
 	else {
 		res.redirect("/login")

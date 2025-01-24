@@ -1,73 +1,70 @@
-const fileInput = document.getElementById("lead_magnet")
-let lead_image;
-const image_container = document.getElementById("image_container")
-const textAd = document.getElementById("text_ad");
-const textCont = document.getElementById("textcont");
-const lead_image_magnet = document.getElementById("lead_image_magnet")
-const create_lead_button = document.querySelector("create_lead_button")
-const error = document.getElementById("error")
-const success = document.getElementById("success")
+const add_category = document.getElementById('add_category');
 
-fileInput.addEventListener('change', function () {
-	const file = fileInput.files[0];
-	if (file) {
-		const reader = new FileReader();
+add_category.addEventListener('click', () => {
+    const category = document.getElementById('category').value;
 
-		reader.onload = function (e) {
-            lead_image = e.target.result;
-            image_container.innerHTML = `<img src="${e.target.result}" class="img-fluid d-block w-100"/>`
-            lead_image_magnet.style.backgroundImage = `url(${e.target.result})`
-		};
-
-		reader.readAsDataURL(file);
-	}
-	else {
-		image_container.innerHTML = `<i class="material-icons d-block m-auto" style="font-size: 60px;">
-                                        upload
-                                    </i>
-                                    <h3 class="text-center">Create A Project</h3>`
-        lead_image_magnet.style.backgroundImage = null
-        lead_image = null
-	}
-});
-
-textAd.addEventListener("input", (e) => {
-    textCont.innerHTML = e.target.value;
-});
-
-create_lead_button.addEventListener("click", () => {
-    const lead_name = document.getElementById("lead_name").value
-    const text_ad = document.getElementById("text_ad").value
-    const category = document.getElementById("category").value
-
-    const formData = new FormData()
-    formData.append("name", lead_name)
-    formData.append("ad", text_ad)
-    formData.append("category", category)
-    formData.append("lead_magnet", lead_image)
-
-    var params = {
-        body : formData,
-        method: "POST"
+    const params = {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ category: category }),
+        method: 'POST'
     }
 
-    fetch("/customers/create_lead", params)
+    fetch("/customers/add_category", params)
         .then(res => res.json())
         .then(data => {
-            if(data.success){
+            if (data.success) {
+                const category = data.message;
+                create_toast("category added successfully", 'success');
 
-                error.style.display = "none"
-                success.style.display = "block"
-
-                error.innerHTML = data.message
-
+                const category_table = document.querySelector('.category_table');
+                category_table.insertAdjacentHTML('afterbegin', `<tr>
+                                                                    <td>${category.category}</td>
+                                                                    <td>http://127.0.0.1:5000/add_customers/${category._id}</td>
+                                                                </tr>`);
             }
             else {
-                success.style.display = "none"
-                error.style.display = "block"
-
-                error.innerHTML = data.message
+                create_toast(data.message, 'error');
             }
         })
-        .catch(err => console.log(err))
+        .catch(error => {
+            console.log(error);
+        })
 })
+
+window.addEventListener('load', () => {
+    fetch("/customers/load_category")
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const category_table = document.querySelector('.category_table');
+                data.message.forEach(category => {
+                    category_table.insertAdjacentHTML('afterbegin', `<tr>
+                                                                        <td>${category.category}</td>
+                                                                        <td>http://127.0.0.1:5000/add_customers/${category._id}</td>
+                                                                    </tr>`);
+                })
+            }
+        })
+        .catch(error => console.error(error))
+})
+
+const create_toast = (message, type) => {
+    const toast = document.createElement("div");
+    toast.style.position = "fixed";
+    toast.style.top = "80px";
+    toast.style.right = "20px";
+    toast.style.backgroundColor = type === "success" ? "green" : "red";
+    toast.style.color = "white";
+    toast.style.padding = "10px";
+    toast.style.borderRadius = "5px";
+    toast.style.zIndex = "1000";
+    document.body.appendChild(toast);
+
+    toast.innerHTML = message;
+
+    setTimeout(() => {
+        document.body.removeChild(toast);
+    }, 3000);
+}

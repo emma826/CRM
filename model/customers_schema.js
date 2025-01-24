@@ -23,6 +23,10 @@ const customer_schema = mongoose.Schema({
 	profile_image: {
 		type: String
 	},
+	category: {
+		required: true,
+		type: String
+	},
 	status: {
 		required: true,
 		type: String,
@@ -39,4 +43,20 @@ const customer_schema = mongoose.Schema({
 
 const customer = mongoose.model("customerSchema", customer_schema)
 
-module.exports = { customer }
+const category_schema = mongoose.Schema({
+	user_id: {
+		type: String,
+		required: true
+	},
+	category: {
+		type: String,
+		required: true
+	}
+}, {
+	collection: "category",
+	timeStamp: true
+})
+
+const category = mongoose.model("categorySchema", category_schema)
+
+module.exports = { customer, category_model: category }
