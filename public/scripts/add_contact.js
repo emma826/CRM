@@ -7,8 +7,9 @@ const customer_container = document.querySelector(".customers")
 let customers = [];
 
 const updateCustomerList = (customerList) => {
+	let reverse_customer_list = customerList.reverse()
 	customer_container.innerHTML = "";
-	customerList.forEach(customer => {
+	reverse_customer_list.forEach(customer => {
 		const date = new Date(customer.date_added);
 		customer_container.innerHTML += `<tr>
 											<td>
@@ -16,9 +17,10 @@ const updateCustomerList = (customerList) => {
 											</td>
 											<td>${customer.phone_number}</td>
 											<td>${customer.email}</td>
+											<td>${customer.gender}</td>
+											<td>${customer.category}</td>
 											<td>${customer.company}</td>
 											<td>${date.toDateString()}</td>
-											<td><input type="checkbox" class="form-check text-center" name="" id=""></td>
 										</tr>`;
 	});
 };
@@ -84,7 +86,7 @@ add_contact.addEventListener("click", async () => {
 	formData.append("name", name.trim());
 	formData.append("email", email.trim());
 	formData.append("dob", dob.trim());
-	formData.append("gender", gendertrim());
+	formData.append("gender", gender.trim());
 	formData.append("country_code", country_code.trim());
 	formData.append("telephone", telephone.trim());
 	formData.append("physical_address", physical_address.trim());

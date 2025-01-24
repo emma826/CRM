@@ -4,7 +4,7 @@ const path = require("path")
 const { get_user_details, get_interactions_details, get_customers, get_customer_details } = require("./middleware")
 const interactions = require("../model/interaction_schema")
 const body_parser = require("body-parser")
-const customerSchema = require("../model/customers_schema")
+const { customer, category_model } = require("../model/customers_schema")
 const noteSchema = require("../model/noteSchema")
 const email_schema = require("../model/email_schema")
 const schedule_schema = require("../model/schedule_schema")
@@ -64,9 +64,9 @@ const send_schedule = async (user_id, customer_ids, message, schedule_date) => {
 	try {
 
 		await customer_ids.forEach(async customer_id => {
-			if(customer_id != null){
+			if (customer_id != null) {
 				await schedule_schema.create({ user_id, customer_id, message, schedule_date, date })
-			}		
+			}
 		})
 
 		return {
@@ -138,7 +138,7 @@ router.post("/send_schedule", async (req, res) => {
 	if (!id) {
 		return res.status(500).json({ errors: "Session not found, try logging in to fix issue" })
 	}
-	else if (!schedule_date|| !body || !customer_container || customer_container == [] || !customer_name_container || customer_name_container == []) {
+	else if (!schedule_date || !body || !customer_container || customer_container == [] || !customer_name_container || customer_name_container == []) {
 		return res.status(400).json({ errors: "Empty fields, please fill in the blank spaces" })
 	}
 	else {
@@ -243,6 +243,19 @@ router.get("/", async (req, res) => {
 
 	}
 })
+
+router.get("/create_interaction", async (req, res) => {
+	const url = path.join("interactions", "create_interaction")
+	const { id, first_name, last_name, email } = req.user
+
+	if (!id) {
+		res.redirect("/login")
+	}
+	else {
+		res.render(url, { id, first_name, last_name, email })
+	}
+})
+
 
 router.get("/get_interactions", async (req, res) => {
 	const { id } = req.user

@@ -20,12 +20,16 @@ router.post("/add_customers/:category", async (req, res) => {
 
 	if (!name || !email) {
 		return res.status(400).json({
-			errors: "Empty fields, fill in your email and password"
+			success: false,
+			message: "Empty fields, fill in your email and password"
 		})
 	}
 
 	else if (!id) {
-		return res.status(500).json({ errors: "Session not found, try logging in again" })
+		return res.status(500).json({
+			success: false,
+			message: "Session not found, try logging in again"
+		})
 	}
 
 	const category_details = await get_category_details(id, category_id)
@@ -36,9 +40,9 @@ router.post("/add_customers/:category", async (req, res) => {
 			message: "Category not found, please select a category"
 		})
 	}
-	
+
 	try {
-		let uniqueFilename = "null"
+		let uniqueFilename = null
 		const date = new Date()
 
 		if (req.files && Object.keys(req.files).length > 0) {
@@ -47,20 +51,29 @@ router.post("/add_customers/:category", async (req, res) => {
 
 			if (profileImage.size > 500000) {
 				return res.status(400).json({
-					errors: "Image is too large for upload, try uploading a smaller image"
+					success: false,
+					message: "Image is too large for upload, try uploading a smaller image"
 				})
 			}
 
 			await profileImage.mv(path.join(__dirname, "../public", "uploads", uniqueFilename))
 		}
 
-		await customer.create({ user_id: id, name, phone_number: country_code + telephone, email, company, profile_image: uniqueFilename, status: "customer", date_added: date.getTime() })
+		const category = category_details.data.category
 
-		return res.status(200).json({ success: "New contact added" })
+		const create_customer = await customer.create({ user_id: id, name, dob, gender, phone_number: country_code + telephone, physical_address, email, company, profile_image: uniqueFilename, category, date_added: date.getTime() })
+
+		return res.status(200).json({
+					success: true,
+					message : create_customer
+				})
 
 	} catch (error) {
 		console.log(error)
-		res.status(500).json({ errors: "Server error, please try again later" })
+		return res.status(500).json({
+					success: false,
+					message: "Server error, please try again later"
+				})
 	}
 
 })

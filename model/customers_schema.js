@@ -9,7 +9,18 @@ const customer_schema = mongoose.Schema({
 		required: true,
 		type: String
 	},
+	dob : {
+		type : Date
+	}, 
+	gender: {
+		type: String,
+		enum: ["male", "female"],
+		required: true
+	},
 	phone_number: {
+		type: String
+	},
+	physical_address: {
 		type: String
 	},
 	email: {
@@ -27,14 +38,9 @@ const customer_schema = mongoose.Schema({
 		required: true,
 		type: String
 	},
-	status: {
-		required: true,
-		type: String,
-		default: "lead"
-	},
 	date_added: {
-		required: true,
-		type: Number
+		type: Date,
+		default: Date.now
 	}
 }, {
 	collection: "Customer",
