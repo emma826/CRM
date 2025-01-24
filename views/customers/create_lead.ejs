@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+		<meta charset="utf-8" />
+		<title>Dashboard | Adminto - Responsive Admin Dashboard Template</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+		<meta content="Coderthemes" name="author" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		
+		<link rel="shortcut icon" href="/images/favicon.ico">
+
+		<link href="/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+
+		<link href="/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/material-icons@1.13.12/iconfont/material-icons.min.css">
+
+	</head>
+
+	<body class="loading" data-layout-color="light"  data-layout-mode="default" data-layout-size="fluid" data-topbar-color="light" data-leftbar-position="fixed" data-leftbar-color="light" data-leftbar-size='default' data-sidebar-user='true'>
+
+		<div id="wrapper">
+
+			<%- include("../includes/navbar") %>
+
+			<%- include("../includes/sidebar") %>
+		 
+			<div class="content-page">
+				<div class="content">
+
+					<div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="mb-3"> Lead Form </h3>
+
+                                        <div class="alert alert-danger" id="error" style="display: none"></div>
+                                        <div class="alert alert-success" id="success" style="display: none"></div>
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="lead_name" placeholder="John Doe">
+                                            <label for="lead_name">Name of Lead</label>
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="category" placeholder="John Doe">
+                                            <label for="category">Category</label>
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" placeholder="Leave a text ad here" id="text_ad" style="height: 100px"></textarea>
+                                            <label for="text_ad">Text Ad</label>
+                                        </div>
+                                        <h5>Lead Magnet</h5>
+                                        <div class="mb-3 position-relative" style="overflow: hidden;">
+                                            <input type="file" id="lead_magnet" style="height: 1000px; opacity: 0;" class="d-block w-100 form-control position-absolute"/>
+                                            <div class="rounded"  id="lead_magnet" style="border: 2px solid black;">
+                                                <div class="text-center" id="image_container">
+                                                    <i class="material-icons d-block m-auto" style="font-size: 60px;">
+                                                        upload
+                                                    </i>
+                                                    <h4 class="text-center">Upload Lead Magnet</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button class="btn-success btn py-2 mx-auto d-block px-3 create_lead_button">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-8 bg-light" style="min-height: 100vh; height: auto; padding-top: 140px; ">
+
+                                <div class="w-75 card mx-auto" style="overflow: hidden;">
+                                    <div style="display: flex;">
+                                        <div style="width: 150px; min-height: 300px; background-repeat: no-repeat; background-position: center; background-size: cover;" id="lead_image_magnet" class="bg-primary"></div>
+
+                                        <div style="flex: 1;" class="card-block p-2">
+                                            <h2 class="text-center mb-3 text_container_add" id="textcont">Text Ad</h2>
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="name" placeholder="John Doe">
+                                                <label for="name">Name</label>
+                                            </div>
+                                            <div class="form-floating mb-3">
+                                                <input type="email" class="form-control" id="email" placeholder="John Doe">
+                                                <label for="name">Email Address</label>
+                                            </div>
+
+                                            <button disabled class="d-block mx-auto btn btn-success py-2 px-3">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+						
+					</div>
+
+				</div>
+
+
+		</div>
+
+		<!-- Vendor -->
+		<script src="/libs/jquery/jquery.min.js"></script>
+		<script src="/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="/libs/simplebar/simplebar.min.js"></script>
+		<script src="/libs/node-waves/waves.min.js"></script>
+		<script src="/libs/waypoints/lib/jquery.waypoints.min.js"></script>
+		<script src="/libs/jquery.counterup/jquery.counterup.min.js"></script>
+		<script src="/libs/feather-icons/feather.min.js"></script>
+
+		<!-- knob plugin -->
+		<script src="/libs/jquery-knob/jquery.knob.min.js"></script>
+
+		<!--Morris Chart-->
+		<script src="/libs/morris.js06/morris.min.js"></script>
+		<script src="/libs/raphael/raphael.min.js"></script>
+  
+		<!-- Dashboar init js-->
+		<script src="/js/pages/dashboard.init.js"></script>
+
+		<!-- App js-->
+		<script src="/js/app.min.js"></script>
+		<script src="/scripts/create_lead.js"></script>
+	</body>
+
+</html>

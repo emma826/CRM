@@ -201,6 +201,18 @@ router.get("/", async (req, res) => {
 	}
 })
 
+router.get("/create_lead", async (req, res) => {
+	const { id, first_name, last_name, email } = req.user
+	const url = path.join("customers", "create_lead")
+
+	if(id) {
+		res.render(url, {id, first_name, last_name, email})
+	}
+	else {
+		res.redirect("/login")
+	}
+})
+
 router.get("/load_contact", async (req, res) => {
 	const { id } = req.user
 

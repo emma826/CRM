@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const path = require("path")
 const { get_user_details } = require("./middleware")
-const customer_schema = require("../model/customers_schema")
+const { customer } = require("../model/customers_schema")
 
 router.use(get_user_details)
 
@@ -32,14 +32,15 @@ router.post("/get_customer_by_status", async (req, res) => {
 
 	try {
 
-		const get_customer = await customer_schema.find({status})
+		const get_customer = await customer.find({ status })
 
 		return res.status(200).json({
-			success : true,
-			message : get_customer
+			success: true,
+			message: get_customer
 		})
 
 	} catch (error) {
+		console.log(error)
 		return res.status(500).json({
 			success: false,
 			message: 'Server error, please try again later'

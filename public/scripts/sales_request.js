@@ -28,8 +28,9 @@ const getCustomers = async (status) => {
             
             columns_id.innerHTML = ""
             if(data.success) {
-                data.message.forEach(customer => {
-                    columns_id.innerHTML = `<li id='${customer.id}' draggable="true">
+                const customer_details = data.message.reverse()
+                customer_details.forEach(customer => {
+                    columns_id.innerHTML += `<li id='${customer.id}' draggable="true">
                                             <div class="kanban-box">
 
                                                 <div class="kanban-detail">
@@ -40,6 +41,11 @@ const getCustomers = async (status) => {
                                                                 title="Username">
                                                                 <img src="/images/upload.png" alt="img"
                                                                     class="avatar-sm rounded-circle">
+                                                            </a>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <a href="mailto:${customer.email}" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                                ${customer.email}
                                                             </a>
                                                         </li>
                                                         <li class="list-inline-item">
@@ -60,37 +66,4 @@ const getCustomers = async (status) => {
 
 ['upcoming', 'inprogress', 'completed'].forEach(async status => {
     await getCustomers(status)
-});
-
-columns.forEach(column => {
-    column.addEventListener('dragover', (e) => {
-        e.preventDefault();
-    });
-
-    column.addEventListener('drop', async (e) => {
-        e.preventDefault();
-        const customerId = e.dataTransfer.getData('text/plain');
-        const newStatus = column.id;
-
-        const response = await fetch(`/sales/update_customer_status`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id: customerId, status: newStatus })
-        });
-
-        if (response.ok) {
-            const customerElement = document.getElementById(customerId);
-            column.appendChild(customerElement);
-        } else {
-            console.error('Failed to update customer status');
-        }
-    });
-});
-
-document.addEventListener('dragstart', (e) => {
-    if (e.target.tagName === 'li') {
-        e.dataTransfer.setData('text/plain', e.target.id);
-    }
 });
