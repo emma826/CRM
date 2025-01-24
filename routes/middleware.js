@@ -294,4 +294,30 @@ const get_dashboard = async (user_id) => {
 	}
 }
 
-module.exports = { get_dashboard, get_user_details, get_customers, get_customer_details, get_interactions_details, get_dashboard, get_category }
+const get_category_details = async (user_id, category_id) => {
+	try {
+		const get_category = await category_model.findOne({ _id: category_id, user_id })
+
+		if (!get_category) {
+			return {
+				message: "No category found",
+				status: 201
+			}
+		}
+		else {
+			return {
+				message: "category",
+				status: 200,
+				data: get_category
+			}
+		}
+	} catch (error) {
+		console.log(error)
+		return {
+			message: "Server error, please try again later",
+			status: 500
+		}
+	}
+}
+
+module.exports = { get_dashboard, get_user_details, get_customers, get_customer_details, get_interactions_details, get_dashboard, get_category, get_category_details }
