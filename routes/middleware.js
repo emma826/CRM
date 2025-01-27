@@ -6,6 +6,8 @@ const env = require("dotenv").config()
 const user = require("../model/user_schema")
 const { customer, category_model } = require("../model/customers_schema")
 const interaction = require("../model/interaction_schema")
+const dotenv = require("dotenv").config()
+const nodemailer = require("nodemailer")
 
 router.use(cookie_parser())
 
@@ -320,4 +322,48 @@ const get_category_details = async (user_id, category_id) => {
 	}
 }
 
-module.exports = { get_dashboard, get_user_details, get_customers, get_customer_details, get_interactions_details, get_dashboard, get_category, get_category_details }
+const send_multi_email = async (user_id, selectedCustomers, name, email, interactionName, interactionContent, company) => {
+	selectedCustomers.forEach(async customer => {
+
+		const { data } = await get_customer_details(user_id, customer)
+		const customer_email = data.email
+		const customer_name = data.name
+		const user_company = company || "Company"
+
+		const mailOptions = {
+			from: email,
+			to: customer_email,
+			subject: interactionName,
+			html: `
+				<p>Hello ${customer_name}</p>
+				<p>${interactionContent}</p>
+				<p>Regards</p>
+				<p>${name}</p>
+				<p>${user_company}</p>
+			`
+		}
+
+		const transporter = nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+				user: process.env.SMTP_EMAIL,
+				pass: process.env.SMTP_PASSWORD
+			}
+		});
+
+		try {
+			await transporter.sendMail(mailOptions);
+			return {
+				success: true,
+			}
+		} catch (error) {
+			return {
+				success: false,
+				message : "Couldn't send mail"
+			}
+		}
+
+	});
+}
+
+module.exports = { get_dashboard, send_multi_email, get_user_details, get_customers, get_customer_details, get_interactions_details, get_dashboard, get_category, get_category_details }

@@ -24,96 +24,229 @@
 
     <div id="wrapper">
 
+        <!-- Modal -->
+        <div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="customerModalLabel">Select Customer</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table class="table table-centered table-nowrap table-hover mb-0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th scope="col">Select</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Gender</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Company</th>
+                                        <th scope="col">Job Title</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% customers.forEach(function(customer) { %>
+                                        <tr>
+                                            <td><input type="checkbox" class="select_customer" name="select_customer"
+                                                    value="<%= customer.id %>"></td>
+                                            <td>
+                                                <%= customer.name %>
+                                            </td>
+                                            <td>
+                                                <%= customer.gender %>
+                                            </td>
+                                            <td>
+                                                <%= customer.category %>
+                                            </td>
+                                            <td>
+                                                <%= customer.company %>
+                                            </td>
+                                            <td>
+                                                <%= customer.job_title %>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary add_customer_button"
+                            data-bs-dismiss="modal">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <%- include("../includes/navbar") %>
 
             <%- include("../includes/sidebar") %>
 
-            <div class="content-page">
-                <div class="content">
+                <div class="content-page">
+                    <div class="content">
 
-                    <div class="container-fluid">
+                        <div class="container-fluid">
 
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h3 class="mb-3">Add Interaction </h3>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h3 class="mb-3">Add Interaction </h3>
+                                            <div class="alert alert-danger error" style="display: none"></div>
+                                            <div class="alert alert-success success" style="display: none;"></div>
 
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="interaction_name"
+                                                    placeholder="Interaction Name">
+                                                <label for="interaction_name">Interaction Subject</label>
+                                            </div>
+
+                                            <p id="customer_count"></p>
+
+                                            <button type="button" class="btn btn-primary mb-3 w-100"
+                                                data-bs-toggle="modal" data-bs-target="#customerModal">
+                                                Add Customer
+                                            </button>
+
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select" id="interaction_type"
+                                                    aria-label="Interaction Type">
+                                                    <option selected value="">Interaction Type</option>
+                                                    <option value="automated_message">Automated Message</option>
+                                                    <option value="follow_up">Follow-up</option>
+                                                </select>
+                                                <label for="interaction_type">Interaction Type</label>
+                                            </div>
+
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select" id="interaction_schedule_type"
+                                                    aria-label="Interaction Schedule Type">
+                                                    <option selected value="">Select Schedule Type</option>
+                                                    <option value="one_time">One Time</option>
+                                                    <option value="recurring">Recurring</option>
+                                                </select>
+                                                <label for="interaction_schedule_type">Schedule Type</label>
+                                            </div>
+
+                                            <div id="one_time_schedule" style="display: none;">
+                                                <div class="form-floating mb-3">
+                                                    <input type="datetime-local" class="form-control"
+                                                        id="scheduled_time" placeholder="Scheduled Time">
+                                                    <label for="scheduled_time">Scheduled Time</label>
+                                                </div>
+                                            </div>
+
+                                            <div id="recurring_schedule" style="display: none;">
+                                                <div class="form-floating mb-3">
+                                                    <select class="form-select" id="recurring_type"
+                                                        aria-label="Recurring Type">
+                                                        <option selected value="">Select Recurrence Type</option>
+                                                        <option value="daily">Every Day</option>
+                                                        <option value="weekly">Every Week</option>
+                                                        <option value="monthly">Every Month</option>
+                                                        <option value="yearly">Every Year</option>
+                                                    </select>
+                                                    <label for="recurring_type">Recurring Type</label>
+                                                </div>
+
+                                                <div id="recurring_details"></div>
+                                                <script>
+                                                    document.getElementById('recurring_type').addEventListener('change', function () {
+                                                        var recurringDetails = document.getElementById('recurring_details');
+                                                        recurringDetails.innerHTML = '';
+                                                        if (this.value === 'daily') {
+                                                            recurringDetails.innerHTML = `
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="category"
-                                                placeholder="John Doe">
-                                            <label for="category">Customer</label>
-                                        </div>
-                                        
+                                            <input type="time" class="form-control" id="recurring_time" placeholder="Time">
+                                            <label for="recurring_time">Time</label>
+                                        </div>`;
+                                                        } else if (this.value === 'weekly') {
+                                                            recurringDetails.innerHTML = `
                                         <div class="form-floating mb-3">
-                                            <select class="form-select" id="interaction_type" aria-label="Interaction Type">
-                                                <option selected value="">Interaction Type</option>
-                                                <option value="1">Note</option>
-                                                <option value="2">Automated Message</option>
-                                                <option value="3">Follow-up</option>
+                                            <select class="form-select" id="recurring_day" aria-label="Recurring Day">
+                                                <option selected value="">Select Day</option>
+                                                <option value="monday">Monday</option>
+                                                <option value="tuesday">Tuesday</option>
+                                                <option value="wednesday">Wednesday</option>
+                                                <option value="thursday">Thursday</option>
+                                                <option value="friday">Friday</option>
+                                                <option value="saturday">Saturday</option>
+                                                <option value="sunday">Sunday</option>
                                             </select>
-                                            <label for="interaction_type">Interaction Type</label>
+                                            <label for="recurring_day">Recurring Day</label>
                                         </div>
-
                                         <div class="form-floating mb-3">
-                                            <input type="datetime-local" class="form-control" id="scheduled_time" placeholder="Scheduled Time">
-                                            <label for="scheduled_time">Scheduled Time</label>
-                                        </div>
-
-                                        <div class="form-check mb-3">
-                                            <input class="form-check-input" type="checkbox" id="recurring">
-                                            <label class="form-check-label" for="recurring">
-                                                Recurring Message
-                                            </label>
-                                        </div>
-
+                                            <input type="time" class="form-control" id="recurring_time" placeholder="Time">
+                                            <label for="recurring_time">Time</label>
+                                        </div>`;
+                                                        } else if (this.value === 'monthly') {
+                                                            recurringDetails.innerHTML = `
                                         <div class="form-floating mb-3">
-                                            <textarea class="form-control" placeholder="Leave a comment here" id="interaction_content"
-                                                style="height: 300px"></textarea>
-                                            <label for="interaction_content">Interaction Content</label>
+                                            <input type="number" class="form-control" id="recurring_date" placeholder="Date" min="1" max="31">
+                                            <label for="recurring_date">Date</label>
                                         </div>
-
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="category"
-                                                placeholder="John Doe">
-                                            <label for="category">New Category</label>
-                                        </div>
-
-                                        <button class="btn-success btn py-2 mx-auto d-block px-3"
-                                            id="add_category">Add</button>
+                                            <input type="time" class="form-control" id="recurring_time" placeholder="Time">
+                                            <label for="recurring_time">Time</label>
+                                        </div>`;
+                                                        } else if (this.value === 'yearly') {
+                                                            recurringDetails.innerHTML = `
+                                    <div class="form-floating mb-3">
+                                        <input type="date" class="form-control" id="recurring_date" placeholder="Date">
+                                        <label for="recurring_date">Date</label>
                                     </div>
-                                </div>
-                            </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="time" class="form-control" id="recurring_time" placeholder="Time">
+                                        <label for="recurring_time">Time</label>
+                                    </div>`;
+                                                        }
+                                                    });
+                                                </script>
+                                            </div>
 
-                            <div class="col-8 bg-light">
+                                            <div class="form-floating mb-3">
+                                                <textarea class="form-control" placeholder="Leave a comment here"
+                                                    id="interaction_content" style="height: 300px"></textarea>
+                                                <label for="interaction_content">Interaction Content</label>
+                                            </div>
 
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h3 class="mb-3"> Categories </h3>
-
-                                        <div class="table-responsive">
-                                            <table class="table table-centered table-nowrap table-hover mb-0">
-                                                <thead class="bg-light">
-                                                    <tr>
-                                                        <th scope="col">Category</th>
-                                                        <th scope="col">Api Key</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="category_table"></tbody>
-                                            </table>
+                                            <button class="btn-success btn py-2 mx-auto d-block px-3"
+                                                id="add_category">Add</button>
                                         </div>
                                     </div>
                                 </div>
 
+                                <div class="col-8 bg-light">
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h3 class="mb-3"> Categories </h3>
+
+                                            <div class="table-responsive">
+                                                <table class="table table-centered table-nowrap table-hover mb-0">
+                                                    <thead class="bg-light">
+                                                        <tr>
+                                                            <th scope="col">Category</th>
+                                                            <th scope="col">Api Key</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="category_table"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
+
                         </div>
 
                     </div>
 
+
                 </div>
-
-
-            </div>
 
                 <!-- Vendor -->
                 <script src="/libs/jquery/jquery.min.js"></script>
@@ -136,6 +269,7 @@
 
                 <!-- App js-->
                 <script src="/js/app.min.js"></script>
+                <script src="/scripts/create_interaction.js"></script>
 
 </body>
 

@@ -1,115 +1,45 @@
 const express = require("express")
 const router = express.Router()
 const path = require("path")
-const { get_user_details, get_interactions_details, get_customers, get_customer_details } = require("./middleware")
+const { get_user_details, get_interactions_details, get_customers, get_customer_details, send_multi_email } = require("./middleware")
 const interactions = require("../model/interaction_schema")
 const body_parser = require("body-parser")
 const { customer, category_model } = require("../model/customers_schema")
 const noteSchema = require("../model/noteSchema")
 const email_schema = require("../model/email_schema")
 const schedule_schema = require("../model/schedule_schema")
+const { send } = require("process")
 
 router.use(get_user_details)
 router.use(body_parser.json())
 
-const send_notes = async (customers, note, user_id) => {
-	const date = new Date()
-	try {
-		await customers.forEach(async customer_id => {
-			if (customer_id != null) {
-				await noteSchema.create({ user_id, customer_id, note, date: date.getTime() })
-			}
-		})
-		return {
-			message: "Notes sent successfully",
-			status: 200
-		}
-	} catch (error) {
-		return {
-			message: "Server error, try again later",
-			status: 500
-		}
-	}
-}
-
-const send_email = async (customer_ids, customer_names, user_id, from_email, subject, body) => {
-	let date = new Date()
-	date = date.getTime()
-
-	try {
-
-		for (let i = 0; i < customer_ids.length; i++) {
-			if (customer_ids[i] != null) {
-				await email_schema.create({ user_id, customer_id: customer_ids[i], name: customer_names[i], from_email, subject, body, date })
-			}
-		}
-
-		return {
-			message: "Email sent successfully",
-			status: 200
-		}
-	} catch (error) {
-		console.log(error)
-		return {
-			message: "Server error, try again later",
-			status: 500
-		}
-	}
-}
-
-const send_schedule = async (user_id, customer_ids, message, schedule_date) => {
-	let date = new Date()
-	date = date.getTime()
-
-	try {
-
-		await customer_ids.forEach(async customer_id => {
-			if (customer_id != null) {
-				await schedule_schema.create({ user_id, customer_id, message, schedule_date, date })
-			}
-		})
-
-		return {
-			message: "Schedule set successfully",
-			status: 200
-		}
-	} catch (error) {
-		console.log(error)
-		return {
-			message: "Server error, try again later",
-			status: 500
-		}
-	}
-}
-
 router.post("/create_interaction", async (req, res) => {
-	const { id } = req.user
-	const { interaction_subject, interaction_type, follow_up } = req.body
+	const { interactionName, interactionType, interactionScheduleType, scheduledTime, recurringDetails, interactionContent, selectedCustomers } = req.body
+	const { id, first_name, last_name, email, company } = req.user
 
 	if (!id) {
-		return res.status(400).json({ errors: "Session not found, please login to fix issue" })
+		return res.status(400).json({ 
+			success: false,
+			message: "Session not found, please login to fix issue" 
+		})
 	}
-	else if (!interaction_subject || !interaction_type) {
-		return res.status(400).json({ errors: "Empty fields, please fill in the blank spaces" })
+
+	if (!interactionName || !interactionType || !interactionScheduleType || !interactionContent || !selectedCustomers || selectedCustomers.length == 0) {
+		return res.status(400).json({ 
+			success: false,
+			message: "Empty fields, please fill in the blank spaces" 
+		})
 	}
-	else {
-		let date = new Date()
-		date = date.getTime()
 
-		const follow_up_mod = new Date(follow_up)
+	const date = new Date().getTime() + (1000 * 60 * 5)
+	const schedule_date = new Date(scheduledTime).getTime()
+	const isgreater = schedule_date <= date
+	const name = `${first_name} ${last_name}`
 
-		try {
-
-			const create_interaction = await interactions.create({ user_id: id, interaction_type, date, subject: interaction_subject, follow_up: follow_up_mod.getTime() })
-
-			return res.status(200).json({
-				success: create_interaction.id
-			})
-		} catch (error) {
-			console.error(error)
-			return res.status(500).json({ errors: "Server error, please try again later" })
-		}
+	if(interactionScheduleType === 'one_time' && isgreater) {
+		send_multi_email(id, selectedCustomers, name, email, interactionName, interactionContent, company)
 	}
+	
 })
 
 router.post("/get_customer_details", async (req, res) => {
@@ -252,10 +182,10 @@ router.get("/create_interaction", async (req, res) => {
 		res.redirect("/login")
 	}
 	else {
-		res.render(url, { id, first_name, last_name, email })
+		const customers = await get_customers(id)
+		res.render(url, { id, first_name, last_name, email, customers : customers.data })
 	}
 })
-
 
 router.get("/get_interactions", async (req, res) => {
 	const { id } = req.user

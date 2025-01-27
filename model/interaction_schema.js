@@ -5,25 +5,44 @@ const interactionSchema = mongoose.Schema({
         type : String,
         required : true
     },
-    customer_id : {
-        type : Array,
+    interactionName: {
+        type: String,
+        required: true
     },
-    interaction_id : {
-        type : String
+    interactionType: {
+        type: String,
+        required: true
     },
-    interaction_type : {
-        type : String,
-        required : true
+    interactionScheduleType: {
+        type: String,
+        required: true
     },
-    date : {
-        type : Number,
-        required : true
+    scheduledTime: {
+        type: Date,
     },
-    subject : {
-        type : String
+    recurringDetails: {
+        type: {
+            type: {
+                type: String,
+                required: false
+            },
+            date: {
+                type: String,
+                required: true
+            },
+            time: {
+                type: String,
+                required: true
+            }
+        }
     },
-    follow_up : {
-        type : Number
+    interactionContent: {
+        type: String,
+        required: true
+    },
+    selectedCustomers: {
+        type: [String],
+        required: true
     }
 }, {
     collection : "Interaction",
