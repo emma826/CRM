@@ -1,9 +1,9 @@
 const mongoose = require("mongoose")
 
 const interactionSchema = mongoose.Schema({
-    user_id : {
-        type : String,
-        required : true
+    user_id: {
+        type: String,
+        required: true
     },
     interactionName: {
         type: String,
@@ -22,19 +22,15 @@ const interactionSchema = mongoose.Schema({
     },
     recurringDetails: {
         type: {
-            type: {
-                type: String,
-                required: false
-            },
-            date: {
-                type: String,
-                required: true
-            },
-            time: {
-                type: String,
-                required: true
-            }
-        }
+            type: String,
+            enum: ['daily', 'weekly', 'monthly', 'yearly'],
+        },
+        date: {
+            type: String,
+        },
+        time: {
+            type: String,
+        },
     },
     interactionContent: {
         type: String,
@@ -43,10 +39,14 @@ const interactionSchema = mongoose.Schema({
     selectedCustomers: {
         type: [String],
         required: true
+    },
+    task: {
+        type: Boolean,
+        default: false
     }
 }, {
-    collection : "Interaction",
-	timeStamp : true
+    collection: "Interaction",
+    timeStamp: true
 })
 
 const model = mongoose.model("InteractionSchema", interactionSchema)

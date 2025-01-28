@@ -16,6 +16,7 @@ router.use(body_parser.json())
 router.post("/create_interaction", async (req, res) => {
 	const { interactionName, interactionType, interactionScheduleType, scheduledTime, recurringDetails, interactionContent, selectedCustomers } = req.body
 	const { id, first_name, last_name, email, company } = req.user
+	let task = true;
 
 	if (!id) {
 		return res.status(400).json({ 
@@ -37,7 +38,25 @@ router.post("/create_interaction", async (req, res) => {
 	const name = `${first_name} ${last_name}`
 
 	if(interactionScheduleType === 'one_time' && isgreater) {
+		task = false
 		send_multi_email(id, selectedCustomers, name, email, interactionName, interactionContent, company)
+	}
+
+	try {
+		const create_interaction = await interactions.create({user_id : id, interactionName, interactionType, interactionScheduleType, scheduledTime, recurringDetails, interactionContent, selectedCustomers, task})
+
+		return res.status(200).json({
+			success: true,
+			create_interaction
+		})
+
+	}
+	catch(error) {
+		console.log(error)
+		return res.status(500).json({
+			success: false,
+			message : "Server error, please try again later"
+		})
 	}
 	
 })
@@ -191,7 +210,10 @@ router.get("/get_interactions", async (req, res) => {
 	const { id } = req.user
 
 	if (!id) {
-		return res.status(400).json({ errors: "Session not found, please login to fix issue" })
+		return res.status(400).json({ 
+			success: false,
+			message: "Session not found, please login to fix issue" 
+		})
 	}
 	else {
 		try {
@@ -199,10 +221,14 @@ router.get("/get_interactions", async (req, res) => {
 			const get_interactions = await interactions.find({ user_id: id })
 
 			if (!get_interactions[0]) {
-				return res.status(201).json({ errors: "No interactions found" })
+				return res.status(201).json({ 
+					success: false,
+					message: "No interactions found" })
 			}
 			else {
-				return res.status(200).json({ success: get_interactions.reverse() })
+				return res.status(200).json({ 
+					success: true,
+					message : get_interactions.reverse() })
 			}
 
 		} catch (error) {

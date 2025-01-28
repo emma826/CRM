@@ -51,7 +51,7 @@ add_category.addEventListener('click', function() {
         } else if (recurringType === 'weekly') {
             recurringDetails = {
                 type: 'weekly',
-                day: document.getElementById('recurring_day').value,
+                date: document.getElementById('recurring_day').value,
                 time: document.getElementById('recurring_time').value
             };
         } else if (recurringType === 'monthly') {
@@ -119,3 +119,14 @@ add_category.addEventListener('click', function() {
         console.error('Error:', error);
     });
 });
+
+window.addEventListener("load", () => {
+    fetch("/interactions/get_interactions")
+        .then(res => res.json())
+        .then(data => {
+            if(data.success){
+
+            }
+        })
+        .catch(err => console.error(err))
+})

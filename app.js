@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express()
 const port = process.env.PORT || 5001
+const schedule = require("./scheduler")
 
 const path = require("path")
 const mongoose = require("mongoose")
@@ -46,4 +47,7 @@ app.get("/register", (req, res) => {
 	res.render("register")
 })
 
-app.listen(port, () => console.log(`127.0.0.1:${port}`))
+app.listen(port, () => {
+	console.log(`127.0.0.1:${port}`)
+	schedule.start()
+})
